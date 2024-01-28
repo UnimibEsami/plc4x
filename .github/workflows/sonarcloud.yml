@@ -26,3 +26,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=UnimibEsami_plc4x -Dsonar.organization=unimibesami -Dsonar.host.url=https://sonarcloud.io
+
+      - name: Upload RAT report
+        uses: actions/upload-artifact@v2
+        if: always() # This ensures the artifact is uploaded even if the previous step fails
+        with:
+          name: rat-report
+          path: target/rat.txt  # Adjust this path to where your RAT report is generated
